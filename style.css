@@ -1,0 +1,7 @@
+.netbetterextension {
+  background-image: url("chrome-extension://__MSG_@@extension_id__/images/biohazard_symbol.svg");
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  display: inline-block;
+}
