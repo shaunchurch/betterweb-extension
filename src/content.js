@@ -66,7 +66,6 @@ const UPDATE_FREQUENCY = 1000 * 600; // 600 seconds = ten minutes
   }
 
   function makeItBetter() {
-    console.log("bettering...");
     Object.values(document.links).forEach(link => {
       if (
         (badnet.get(extractHostname(link.href)) ||
