@@ -5,7 +5,7 @@
   "main": "betterweb.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "add-manifest": "ncp src/manifest.json dist/manifest.json",
+    "add-manifest": "ncp manifest.json dist/manifest.json",
     "add-images": "ncp src/images dist/images",
     "add-styles": "ncp src/styles.css dist/styles.css",
     "watch-background": "parcel watch src/background.js",
