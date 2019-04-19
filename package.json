@@ -1,0 +1,46 @@
+{
+  "name": "betterweb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "betterweb.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "add-manifest": "ncp src/manifest.json dist/manifest.json",
+    "add-images": "ncp src/images dist/images",
+    "add-styles": "ncp src/styles.css dist/styles.css",
+    "watch-background": "parcel watch src/background.js",
+    "watch-popup": "parcel watch src/popup.html",
+    "watch-content": "parcel watch src/content.js",
+    "clean": "rimraf dist/*",
+    "ensure-dist": "mkdirp dist && rimraf dist/*",
+    "dev": "npm run ensure-dist && concurrently \"npm run watch-content\" \"npm run watch-popup\" \"npm run watch-background\" \"npm run add-manifest\" \"npm run add-images\" \"npm run add-styles\"",
+    "build": "npm run ensure-dist && npm run add-manifest && npm run add-images && npm run add-styles && parcel build src/background.js --no-source-maps && parcel build src/popup.html --no-source-maps && parcel build src/content.js --no-source-maps && cross-zip dist dist.zip",
+    "start": "npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaunchurch/betterweb-extension.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shaunchurch/betterweb-extension/issues"
+  },
+  "homepage": "https://github.com/shaunchurch/betterweb-extension#readme",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "styled-components": "^4.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "cross-zip-cli": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "parcel-bundler": "^1.12.3",
+    "rimraf": "^2.6.3"
+  },
+  "browserslist": [
+    "last 1 Chrome version"
+  ]
+}
