@@ -1,5 +1,4 @@
 console.log("Betternet active.");
-
 const UPDATE_FREQUENCY = 1000 * 3600; // 3600 seconds = 1hour
 
 (async function() {
@@ -12,7 +11,7 @@ const UPDATE_FREQUENCY = 1000 * 3600; // 3600 seconds = 1hour
     sites = storage.list;
     lastDataUpdate = storage.timestamp;
 
-    // if the local list is non
+    // if the local list is nonexistent, or stale
     if (!sites || !sites.length || shouldUpdate(lastDataUpdate)) {
       console.log("Updating database...");
       sites = await getData();
@@ -20,6 +19,8 @@ const UPDATE_FREQUENCY = 1000 * 3600; // 3600 seconds = 1hour
         { list: sites, timestamp: new Date().getTime() },
         () => {
           // console.log("saved local db");
+          buildMap();
+          makeItBetter();
         }
       );
     }
@@ -27,9 +28,6 @@ const UPDATE_FREQUENCY = 1000 * 3600; // 3600 seconds = 1hour
     buildMap();
     makeItBetter();
   });
-
-  // don't use this to trigger inserting a dom node...
-  // document.addEventListener("DOMNodeInserted", netBeBetter);
 
   // crudely rerun it to catch late loading links
   // TODO: detect changes to dom that aren't us inserting warnings
@@ -46,7 +44,6 @@ const UPDATE_FREQUENCY = 1000 * 3600; // 3600 seconds = 1hour
     return false;
   }
 
-  // get the urls from Airtable
   async function getData() {
     const res = await fetch(
       "https://api.airtable.com/v0/appQzNVtC3eb9YiJD/Blocklist?api_key=keymITLbejmbTVRY1"
@@ -59,7 +56,6 @@ const UPDATE_FREQUENCY = 1000 * 3600; // 3600 seconds = 1hour
     sites.forEach(site => {
       const url = site.fields.URL;
       if (!url) return;
-      // console.log("adding", url);
       badnet.set(url, true);
       if (url.startsWith("www.")) {
         badnet.set(url.substring(4));
@@ -77,19 +73,16 @@ const UPDATE_FREQUENCY = 1000 * 3600; // 3600 seconds = 1hour
           badnet.get(extractHostname(link.innerText))) &&
         link.isBadnet !== true
       ) {
-        // get the font size of the link text
         var style = window
           .getComputedStyle(link, null)
           .getPropertyValue("font-size");
         var fontSize = parseFloat(style);
-
         const warning = document.createElement("span");
         warning.className = "netbetterextension";
         warning.style.height = `${fontSize}px`;
         warning.style.width = `${fontSize}px`;
         warning.style.backgroundSize = `${fontSize}px`;
         // warning.innerHTML = "!!";
-
         // link.style.color = "#ff4136";
         link.parentNode.insertBefore(warning, link);
         link.isBadnet = true;
@@ -99,15 +92,12 @@ const UPDATE_FREQUENCY = 1000 * 3600; // 3600 seconds = 1hour
 
   function extractHostname(url) {
     var hostname;
-    //find & remove protocol (http, ftp, etc.) and get hostname
     if (url.indexOf("//") > -1) {
       hostname = url.split("/")[2];
     } else {
       hostname = url.split("/")[0];
     }
-    //find & remove port number
     hostname = hostname.split(":")[0];
-    //find & remove "?"
     hostname = hostname.split("?")[0];
     return hostname;
   }
