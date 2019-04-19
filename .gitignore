@@ -2,3 +2,4 @@ dist
 dist.zip
 .cache
 node_modules
+.vscode
