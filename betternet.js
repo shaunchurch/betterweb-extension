@@ -1,5 +1,5 @@
 console.log("Betternet active.");
-const UPDATE_FREQUENCY = 1000 * 3600; // 3600 seconds = 1hour
+const UPDATE_FREQUENCY = 1000 * 600; // 600 seconds = ten minutes
 
 (async function() {
   const badnet = new Map();
