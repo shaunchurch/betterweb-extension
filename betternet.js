@@ -33,9 +33,9 @@ const UPDATE_FREQUENCY = 1000 * 600; // 600 seconds = ten minutes
   // TODO: detect changes to dom that aren't us inserting warnings
   setTimeout(makeItBetter, 2000);
   setTimeout(makeItBetter, 3000);
-  setTimeout(makeItBetter, 4000);
   setTimeout(makeItBetter, 5000);
-  setTimeout(makeItBetter, 6000);
+  setTimeout(makeItBetter, 8000);
+  setTimeout(makeItBetter, 11000);
 
   function shouldUpdate(timestamp) {
     if (new Date().getTime() - timestamp > UPDATE_FREQUENCY) {
