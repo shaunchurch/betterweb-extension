@@ -1,10 +1,50 @@
 console.log("Betternet active.");
 
+const UPDATE_FREQUENCY = 1000 * 3600; // 3600 seconds = 1hour
+
 (async function() {
-  console.log("loading sites...");
-  const sites = await getData(); // TODO cache in local storage?
-  console.log("loaded.");
   const badnet = new Map();
+  let sites = [];
+  let lastDataUpdate = 0;
+
+  // see if we have a local list
+  chrome.storage.local.get(["list", "timestamp"], async storage => {
+    sites = storage.list;
+    lastDataUpdate = storage.timestamp;
+
+    // if the local list is non
+    if (!sites || !sites.length || shouldUpdate(lastDataUpdate)) {
+      console.log("Updating database...");
+      sites = await getData();
+      chrome.storage.local.set(
+        { list: sites, timestamp: new Date().getTime() },
+        () => {
+          // console.log("saved local db");
+        }
+      );
+    }
+
+    buildMap();
+    makeItBetter();
+  });
+
+  // don't use this to trigger inserting a dom node...
+  // document.addEventListener("DOMNodeInserted", netBeBetter);
+
+  // crudely rerun it to catch late loading links
+  // TODO: detect changes to dom that aren't us inserting warnings
+  setTimeout(makeItBetter, 2000);
+  setTimeout(makeItBetter, 3000);
+  setTimeout(makeItBetter, 4000);
+  setTimeout(makeItBetter, 5000);
+  setTimeout(makeItBetter, 6000);
+
+  function shouldUpdate(timestamp) {
+    if (new Date().getTime() - timestamp > UPDATE_FREQUENCY) {
+      return true;
+    }
+    return false;
+  }
 
   // get the urls from Airtable
   async function getData() {
@@ -19,7 +59,7 @@ console.log("Betternet active.");
     sites.forEach(site => {
       const url = site.fields.URL;
       if (!url) return;
-      console.log("adding", url);
+      // console.log("adding", url);
       badnet.set(url, true);
       if (url.startsWith("www.")) {
         badnet.set(url.substring(4));
@@ -56,20 +96,6 @@ console.log("Betternet active.");
       }
     });
   }
-
-  await buildMap();
-  makeItBetter();
-
-  // don't use this to trigger inserting a dom node...
-  // document.addEventListener("DOMNodeInserted", netBeBetter);
-
-  // crudely rerun it to catch late loading links
-  // TODO: detect changes to dom that aren't us inserting warnings
-  setTimeout(makeItBetter, 2000);
-  setTimeout(makeItBetter, 3000);
-  setTimeout(makeItBetter, 4000);
-  setTimeout(makeItBetter, 5000);
-  setTimeout(makeItBetter, 6000);
 
   function extractHostname(url) {
     var hostname;
