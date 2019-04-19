@@ -1,4 +1,4 @@
-console.log("Betternet active.");
+console.log("Betterweb active.");
 const UPDATE_FREQUENCY = 1000 * 600; // 600 seconds = ten minutes
 
 (async function() {
