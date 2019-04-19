@@ -5,8 +5,7 @@ import { saveDataToStorage, getDataFromStorage } from "../lib/storage";
 import { loadBlocklist } from "../lib/api";
 import { extractHostname } from "../lib/utils";
 
-// How frequently should we request a new list of sites?
-const UPDATE_FREQUENCY = 1000 * 600; // 600 seconds = ten minutes
+const UPDATE_FREQUENCY = 1000 * 600; // update blocklist every 600 seconds = ten minutes
 
 type Badnet = Map<string, boolean>;
 
@@ -78,14 +77,10 @@ function makeItBetter(badnet: Badnet): void {
  * Modify a DOM link with alert icon
  */
 function modifyLink(link: HTMLAnchorElement | HTMLAreaElement) {
-  var fontSize = parseInt(
-    window.getComputedStyle(link, null).getPropertyValue("font-size")
-  );
   const warning = document.createElement("span");
-  warning.className = "netbetterextension";
   link.parentNode.insertBefore(warning, link);
   link.isBadnet = true;
-  render(<Alert size={fontSize} />, warning);
+  render(<Alert link={link} />, warning);
 }
 
 function shouldUpdate(timestamp: number): boolean {

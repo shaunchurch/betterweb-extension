@@ -2,11 +2,20 @@ import React from "react";
 import styled from "styled-components";
 
 interface Props {
-  size: number;
+  link?: HTMLAnchorElement | HTMLAreaElement;
 }
 
 export default function Alert(props: Props) {
-  return <AlertStyle>Look</AlertStyle>;
+  function getSize() {
+    if (!props.link) {
+      return 24;
+    }
+    return parseInt(
+      window.getComputedStyle(props.link, null).getPropertyValue("font-size")
+    );
+  }
+
+  return <AlertStyle size={getSize()} className="netbetteralert" />;
 }
 
 const AlertStyle = styled.div`
