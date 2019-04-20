@@ -46,6 +46,7 @@ interface Badsite {
 /**
  * With the top level array of domains build a Map we can consult
  * including variations on domains eg. with/without www.
+ * TODO: move to api?
  */
 function buildMap(list: Array<Badsite>): Badnet {
   const badnet = new Map();
