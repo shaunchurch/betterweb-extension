@@ -17,7 +17,7 @@ $ npm install
 $ npm run build
 ```
 
-Assets will be in ./dist and a `dist.zip` ready to upload to Chrome will be in the root directory.
+Assets will be in `./dist` and a `dist.zip` ready to upload to the Chrome Store will be in the root directory.
 
 ## How to develop
 
