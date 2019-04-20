@@ -1,8 +1,12 @@
 # Betterweb Extension
 
-Show a warning against websites that use bad faith privacy notices. These are sites claiming to care about privacy while making it deliberately difficult to disable privacy invasion.
+Show a warning beside links to websites that use bad faith privacy notices.
+
+These are sites claiming to care about privacy while making it deliberately difficult to disable privacy invasion.
 
 [Install the extension](https://chrome.google.com/webstore/detail/betterweb/olklefeopkpepjnllbckpcjakfdiheco)
+
+![Betterweb extension showing warnings beside links in Google SERPs](https://lh3.googleusercontent.com/JWOHV9sNH4c12u5aPEUpKomAWiFB_eComHS2LC0adcwKEK4r8E_2wpqd36DDKTdWzZTvYISwAgw=w640-h400-e365)
 
 ## Help us build the database
 
