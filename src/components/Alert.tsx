@@ -5,8 +5,8 @@ interface Props {
   link?: HTMLAnchorElement | HTMLAreaElement;
 }
 
-export default function Alert(props: Props) {
-  function getSize() {
+export default function Alert(props: Props): JSX.Element {
+  function getSize(): number {
     if (!props.link) {
       return 24;
     }
@@ -15,7 +15,7 @@ export default function Alert(props: Props) {
     );
   }
 
-  function log() {
+  function log(): void {
     console.log("hi", props.link.href);
   }
 

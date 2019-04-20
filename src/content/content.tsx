@@ -15,8 +15,66 @@ interface Badsite {
   reasons?: string[];
 }
 
+/**
+ * With the top level array of domains build a Map we can consult
+ * including variations on domains eg. with/without www.
+ * TODO: move to api?
+ */
+function buildMap(list: Badsite[]): Badnet {
+  const badnet = new Map();
+  list.forEach(
+    (site): void => {
+      const url = site.url;
+      if (!url) return;
+      badnet.set(url, true);
+      if (url.startsWith("www.")) {
+        badnet.set(url.substring(4), true);
+      } else {
+        badnet.set("www." + url, true);
+      }
+    }
+  );
+  return badnet;
+}
+
+/**
+ * Modify a DOM link with alert icon
+ */
+function modifyLink(link: HTMLAnchorElement | HTMLAreaElement): void {
+  const warning = document.createElement("span");
+  link.parentNode.insertBefore(warning, link);
+  link.isBadnet = true;
+  render(<Alert link={link} />, warning);
+}
+
+/**
+ * Loop through all links on the page and modify if necessary
+ */
+function makeItBetter(badnet: Badnet): void {
+  console.log("bettering...");
+  // for all document links
+  Object.values(document.links).forEach(
+    (link): void => {
+      const domain = extractHostname(link.href);
+      const text = extractHostname(link.innerText);
+
+      // if it's in the list insert the alert
+      if ((badnet.get(domain) || badnet.get(text)) && link.isBadnet !== true) {
+        modifyLink(link);
+      }
+    }
+  );
+}
+
+function shouldUpdate(timestamp: number): boolean {
+  if (new Date().getTime() - timestamp > UPDATE_FREQUENCY) {
+    return true;
+  }
+  return false;
+}
+
 // kick off
-(async function() {
+(async function(): Promise<void> {
   console.log("Betterweb active.");
 
   let { list = [], timestamp = 0 } = await getDataFromStorage([
@@ -38,61 +96,7 @@ interface Badsite {
 
   // crudely rerun it to catch late loading links
   // TODO: detect changes to dom that aren't us, for lazy loaded content
-  setTimeout(() => makeItBetter(badnet), 2000);
-  setTimeout(() => makeItBetter(badnet), 4000);
-  setTimeout(() => makeItBetter(badnet), 8000);
+  setTimeout((): void => makeItBetter(badnet), 2000);
+  setTimeout((): void => makeItBetter(badnet), 4000);
+  setTimeout((): void => makeItBetter(badnet), 8000);
 })();
-
-/**
- * With the top level array of domains build a Map we can consult
- * including variations on domains eg. with/without www.
- * TODO: move to api?
- */
-function buildMap(list: Array<Badsite>): Badnet {
-  const badnet = new Map();
-  list.forEach(site => {
-    const url = site.url;
-    if (!url) return;
-    badnet.set(url, true);
-    if (url.startsWith("www.")) {
-      badnet.set(url.substring(4), true);
-    } else {
-      badnet.set("www." + url, true);
-    }
-  });
-  return badnet;
-}
-
-/**
- * Loop through all links on the page and modify if necessary
- */
-function makeItBetter(badnet: Badnet): void {
-  console.log("bettering...");
-  // for all document links
-  Object.values(document.links).forEach(link => {
-    const domain = extractHostname(link.href);
-    const text = extractHostname(link.innerText);
-
-    // if it's in the list insert the alert
-    if ((badnet.get(domain) || badnet.get(text)) && link.isBadnet !== true) {
-      modifyLink(link);
-    }
-  });
-}
-
-/**
- * Modify a DOM link with alert icon
- */
-function modifyLink(link: HTMLAnchorElement | HTMLAreaElement) {
-  const warning = document.createElement("span");
-  link.parentNode.insertBefore(warning, link);
-  link.isBadnet = true;
-  render(<Alert link={link} />, warning);
-}
-
-function shouldUpdate(timestamp: number): boolean {
-  if (new Date().getTime() - timestamp > UPDATE_FREQUENCY) {
-    return true;
-  }
-  return false;
-}

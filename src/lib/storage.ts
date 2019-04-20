@@ -1,15 +1,25 @@
-export function saveDataToStorage(data: Object): Promise<boolean> {
-  return new Promise((resolve, reject) => {
-    chrome.storage.local.set(data, () => {
-      resolve(true);
-    });
-  });
+export function saveDataToStorage(data: Record<string, any>): Promise<boolean> {
+  return new Promise(
+    (resolve): void => {
+      chrome.storage.local.set(
+        data,
+        (): void => {
+          resolve(true);
+        }
+      );
+    }
+  );
 }
 
 export function getDataFromStorage(fields: string | string[]): Promise<any> {
-  return new Promise((resolve, reject) => {
-    chrome.storage.local.get(fields, async storage => {
-      resolve(storage);
-    });
-  });
+  return new Promise(
+    (resolve): void => {
+      chrome.storage.local.get(
+        fields,
+        async (storage): Promise<any> => {
+          resolve(storage);
+        }
+      );
+    }
+  );
 }
