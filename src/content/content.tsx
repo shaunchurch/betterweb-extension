@@ -9,6 +9,12 @@ const UPDATE_FREQUENCY = 1000 * 600; // update blocklist every 600 seconds = ten
 
 type Badnet = Map<string, boolean>;
 
+interface Badsite {
+  url: string;
+  name?: string;
+  reasons?: string[];
+}
+
 // kick off
 (async function() {
   console.log("Betterweb active.");
@@ -41,10 +47,10 @@ type Badnet = Map<string, boolean>;
  * With the top level array of domains build a Map we can consult
  * including variations on domains eg. with/without www.
  */
-function buildMap(list: Array<Object>): Badnet {
+function buildMap(list: Array<Badsite>): Badnet {
   const badnet = new Map();
   list.forEach(site => {
-    const url = site.fields.URL;
+    const url = site.url;
     if (!url) return;
     badnet.set(url, true);
     if (url.startsWith("www.")) {
