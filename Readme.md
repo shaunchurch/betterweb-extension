@@ -4,9 +4,11 @@ Show a warning against websites that use bad faith privacy notices. These are si
 
 [Install the extension](https://chrome.google.com/webstore/detail/betterweb/olklefeopkpepjnllbckpcjakfdiheco)
 
+## Help us build the database
+
 We're building a database of offending sites. I'll set up a web form soon, but meanwhile feel free to send links to [@shaunchurch](https://twitter.com/shaunchurch) on twitter.
 
-## Build
+## How to build
 
 Clone the repo, then:
 
@@ -17,7 +19,7 @@ $ npm run build
 
 Assets will be in ./dist and a `dist.zip` ready to upload to Chrome will be in the root directory.
 
-## Develop
+## How to develop
 
 Clone the repo, then:
 
@@ -26,7 +28,7 @@ $ npm install
 $ npm run dev
 ```
 
-Then go to `brave://extensions/` or `chrome://extensions/` and `Load unpacked`. Select the `./dist` directory. Look for the extension icon in the browser toolbar.
+Then go to `brave://extensions/` or `chrome://extensions/` and `Load unpacked`. Select the `./dist` directory. Look for the extension icon in the browser toolbar to confirm it's added.
 
 #### Note on dev command
 
