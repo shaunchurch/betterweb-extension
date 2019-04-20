@@ -33,3 +33,7 @@ Then go to `brave://extensions/` or `chrome://extensions/` and `Load unpacked`. 
 #### Note on dev command
 
 Only JS files will recompile on save. Images, styles.css, manifest.json changes will not take effect until the command is restarted and changed assets are copied to `./dist`.
+
+## Use Brave
+
+Also, if you're not already, please [consider using Brave as your browser](https://brave.com).
