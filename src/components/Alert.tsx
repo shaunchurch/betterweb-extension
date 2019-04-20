@@ -15,7 +15,13 @@ export default function Alert(props: Props) {
     );
   }
 
-  return <AlertStyle size={getSize()} className="netbetteralert" />;
+  function log() {
+    console.log("hi", props.link.href);
+  }
+
+  return (
+    <AlertStyle onClick={log} size={getSize()} className="betterwebalert" />
+  );
 }
 
 const AlertStyle = styled.div`
@@ -26,4 +32,5 @@ const AlertStyle = styled.div`
   margin-right: 4px;
   height: ${props => props.size}px;
   width: ${props => props.size}px;
+  cursor: pointer;
 `;
