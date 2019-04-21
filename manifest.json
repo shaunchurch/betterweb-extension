@@ -25,13 +25,14 @@
     "*.svg",
     "*.png",
     "images/*.png",
-    "images/*.svg"
+    "images/*.svg",
+    "icons/*.png"
   ],
   "icons": {
-    "16": "images/icon16.png",
-    "32": "images/icon32.png",
-    "48": "images/icon48.png",
-    "64": "images/icon64.png",
-    "128": "images/icon128.png"
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png"
   }
 }
