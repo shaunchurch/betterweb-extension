@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "copy-manifest": "ncp manifest.json dist/manifest.json",
     "copy-images": "ncp src/images dist/images",
-    "copy-styles": "ncp src/styles.css dist/styles.css",
     "watch-background": "parcel watch src/background.ts",
     "watch-popup": "parcel watch src/popup/popup.html",
     "watch-content": "parcel watch src/content/content.tsx",
@@ -16,8 +15,8 @@
     "build-content": "parcel build src/content/content.tsx --no-source-maps",
     "clean": "rimraf dist/*",
     "ensure-dist": "mkdirp dist && rimraf dist/*",
-    "dev": "npm run ensure-dist && concurrently \"npm run watch-content\" \"npm run watch-popup\" \"npm run watch-background\" \"npm run copy-manifest\" \"npm run copy-images\" \"npm run copy-styles\"",
-    "build": "npm run ensure-dist && npm run copy-manifest && npm run copy-images && npm run copy-styles && npm run build-background && npm run build-popup && npm run build-content && cross-zip dist dist.zip",
+    "dev": "npm run ensure-dist && concurrently \"npm run watch-content\" \"npm run watch-popup\" \"npm run watch-background\" \"npm run copy-manifest\" \"npm run copy-images\"",
+    "build": "npm run ensure-dist && npm run copy-manifest && npm run copy-images && npm run build-background && npm run build-popup && npm run build-content && cross-zip dist dist.zip",
     "start": "npm run dev",
     "lint": "eslint ./src/*/**/*.ts ./src/*/**/*.tsx"
   },
