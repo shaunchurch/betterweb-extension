@@ -9,3 +9,7 @@ export function extractHostname(url: string): string {
   hostname = hostname.split("?")[0];
   return hostname;
 }
+
+export function getAssetUrl(assetPath: string): string {
+  return chrome.extension.getURL(assetPath);
+}
