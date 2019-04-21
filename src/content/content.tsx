@@ -75,28 +75,32 @@ function shouldUpdate(timestamp: number): boolean {
 
 // kick off
 (async function(): Promise<void> {
-  console.log("Betterweb active.");
+  try {
+    console.log("Betterweb active.");
 
-  let { list = [], timestamp = 0 } = await getDataFromStorage([
-    "list",
-    "timestamp"
-  ]);
+    let { list = [], timestamp = 0 } = await getDataFromStorage([
+      "list",
+      "timestamp"
+    ]);
 
-  // if the local list is nonexistent, or stale
-  if (!list || !list.length || shouldUpdate(timestamp)) {
-    console.log("Updating Betterweb list...");
-    list = await loadBlocklist();
-    saveDataToStorage({ list: list, timestamp: new Date().getTime() });
+    // if the local list is nonexistent, or stale
+    if (!list || !list.length || shouldUpdate(timestamp)) {
+      console.log("Updating Betterweb list...");
+      list = await loadBlocklist();
+      saveDataToStorage({ list: list, timestamp: new Date().getTime() });
+    }
+
+    const badnet = buildMap(list);
+
+    // 🚀
+    makeItBetter(badnet);
+
+    // crudely rerun it to catch late loading links
+    // TODO: detect changes to dom that aren't us, for lazy loaded content
+    setTimeout((): void => makeItBetter(badnet), 2000);
+    setTimeout((): void => makeItBetter(badnet), 4000);
+    setTimeout((): void => makeItBetter(badnet), 8000);
+  } catch (e) {
+    console.error(e);
   }
-
-  const badnet = buildMap(list);
-
-  // 🚀
-  makeItBetter(badnet);
-
-  // crudely rerun it to catch late loading links
-  // TODO: detect changes to dom that aren't us, for lazy loaded content
-  setTimeout((): void => makeItBetter(badnet), 2000);
-  setTimeout((): void => makeItBetter(badnet), 4000);
-  setTimeout((): void => makeItBetter(badnet), 8000);
 })();
