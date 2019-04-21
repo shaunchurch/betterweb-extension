@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { getAssetUrl } from "../lib/utils";
+const warningPath = require("../images/warning.svg") as string;
 
 interface Props {
   link?: HTMLAnchorElement | HTMLAreaElement;
@@ -19,12 +21,11 @@ export default function Alert(props: Props): JSX.Element {
     console.log("hi", props.link.href);
   }
 
-  return (
-    <AlertStyle onClick={log} size={getSize()} className="betterwebalert" />
-  );
+  return <AlertStyle onClick={log} size={getSize()} />;
 }
 
 const AlertStyle = styled.div`
+  background-image: url('${getAssetUrl(warningPath)}');
   background-size: ${props => props.size}px;
   background-repeat: no-repeat;
   background-position: bottom;
