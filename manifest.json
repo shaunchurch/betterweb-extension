@@ -2,22 +2,31 @@
   "manifest_version": 2,
   "name": "Betterweb",
   "version": "0.3.1",
+  "applications": {
+    "gecko": {
+      "strict_min_version": "54.0a1"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["styles.css"]
+      "js": ["content.js"]
     }
   ],
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  },
   "browser_action": {
     "default_popup": "popup.html"
   },
-  "permissions": ["storage"],
-  "web_accessible_resources": ["images/*.png", "images/*.svg"],
+  "permissions": [
+    "storage",
+    "https://localhost/*",
+    "https://betterweb-api.shaun.church/*"
+  ],
+  "web_accessible_resources": [
+    "*.svg",
+    "*.png",
+    "images/*.png",
+    "images/*.svg"
+  ],
   "icons": {
     "16": "images/icon16.png",
     "32": "images/icon32.png",
