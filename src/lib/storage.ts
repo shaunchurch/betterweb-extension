@@ -1,3 +1,5 @@
+import { Badsite } from "../content/content";
+
 export function saveDataToStorage(data: Record<string, any>): Promise<boolean> {
   return new Promise(
     (resolve): void => {
@@ -11,7 +13,9 @@ export function saveDataToStorage(data: Record<string, any>): Promise<boolean> {
   );
 }
 
-export function getDataFromStorage(fields: string | string[]): Promise<any> {
+export function getDataFromStorage(
+  fields: string[]
+): Promise<{ sites: [Badsite]; timestamp: number }> {
   return new Promise(
     (resolve): void => {
       chrome.storage.local.get(

@@ -9,7 +9,7 @@ const UPDATE_FREQUENCY = 1000 * 600; // update blocklist every 600 seconds = ten
 
 type Badnet = Map<string, boolean>;
 
-interface Badsite {
+export interface Badsite {
   url: string;
   name?: string;
   reasons?: string[];
@@ -20,9 +20,9 @@ interface Badsite {
  * including variations on domains eg. with/without www.
  * TODO: move to api?
  */
-function buildMap(list: Badsite[]): Badnet {
+function buildMap(sites: Badsite[]): Badnet {
   const badnet = new Map();
-  list.forEach(
+  sites.forEach(
     (site): void => {
       const url = site.url;
       if (!url) return;
@@ -78,19 +78,19 @@ function shouldUpdate(timestamp: number): boolean {
   try {
     console.log("Betterweb active.");
 
-    let { list = [], timestamp = 0 } = await getDataFromStorage([
-      "list",
+    let { sites = [], timestamp = 0 } = await getDataFromStorage([
+      "sites",
       "timestamp"
     ]);
 
     // if the local list is nonexistent, or stale
-    if (!list || !list.length || shouldUpdate(timestamp)) {
+    if (!sites || !sites.length || shouldUpdate(timestamp)) {
       console.log("Updating Betterweb list...");
-      list = await loadBlocklist();
-      saveDataToStorage({ list: list, timestamp: new Date().getTime() });
+      sites = await loadBlocklist();
+      saveDataToStorage({ sites, timestamp: new Date().getTime() });
     }
 
-    const badnet = buildMap(list);
+    const badnet = buildMap(sites);
 
     // 🚀
     makeItBetter(badnet);
