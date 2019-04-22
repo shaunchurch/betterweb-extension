@@ -76,6 +76,15 @@ export const Button = styled.button`
   text-transform: uppercase;
   font-weight: bold;
   cursor: pointer;
+
+  &:hover {
+    background: #222;
+    color: #f1f1f1;
+  }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const Input = styled.input`
