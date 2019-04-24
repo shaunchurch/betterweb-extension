@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Betterweb",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "applications": {
     "gecko": {
       "strict_min_version": "54.0a1"

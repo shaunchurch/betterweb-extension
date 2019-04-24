@@ -90,15 +90,16 @@ function ReportForm({ onClose }: Props): JSX.Element {
           <Mascot color={success ? MascotColor.Green : MascotColor.Red} />
         </MascotPosition>
         <Content>
-          <Title>Report site</Title>
           {success ? (
             <div>
-              <p>Thanks for the report. We'll add it to the list.</p>
+              <Title>Thanks</Title>
+              <p>Thanks for the info. We'll add it to the list.</p>
             </div>
           ) : null}
 
           {!success ? (
             <form onSubmit={onFormSubmit}>
+              <Title>Add site</Title>
               <S.Label htmlFor="domain" placeholder="website.com">
                 Domain
               </S.Label>
@@ -118,7 +119,25 @@ function ReportForm({ onClose }: Props): JSX.Element {
                     value="recVhPo75nuEtkF9H"
                     onChange={handleCheck}
                   />
-                  <label htmlFor="reason-1">Bad faith privacy</label>
+                  <label htmlFor="reason-1">Bad faith privacy notice</label>
+                </li>
+                <li>
+                  <input
+                    id="reason-6"
+                    type="checkbox"
+                    value="recpx3PKqzuPRaxVf"
+                    onChange={handleCheck}
+                  />
+                  <label htmlFor="reason-6">Behind paywall</label>
+                </li>
+                <li>
+                  <input
+                    id="reason-5"
+                    type="checkbox"
+                    value="recxBfnWAU61wQ0Kk"
+                    onChange={handleCheck}
+                  />
+                  <label htmlFor="reason-5">No European access</label>
                 </li>
                 <li>
                   <input
@@ -127,7 +146,7 @@ function ReportForm({ onClose }: Props): JSX.Element {
                     value="recO5pRUWbvqdTu5h"
                     onChange={handleCheck}
                   />
-                  <label htmlFor="reason-2">Newsletter popups</label>
+                  <label htmlFor="reason-2">Newsletter popup</label>
                 </li>
                 <li>
                   <input
@@ -148,15 +167,6 @@ function ReportForm({ onClose }: Props): JSX.Element {
                   <label htmlFor="reason-4">
                     Excessive popups and overlays
                   </label>
-                </li>
-                <li>
-                  <input
-                    id="reason-5"
-                    type="checkbox"
-                    value="recxBfnWAU61wQ0Kk"
-                    onChange={handleCheck}
-                  />
-                  <label htmlFor="reason-5">No European access</label>
                 </li>
               </S.ReasonList>
 

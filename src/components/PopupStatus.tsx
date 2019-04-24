@@ -34,7 +34,7 @@ function PopupStatus({
             betterweb <small>{version}</small>
           </Title>
           <S.Active>Active</S.Active>
-          <Button onClick={doReport}>Report Site</Button>
+          <Button onClick={doReport}>Add site</Button>
         </S.Status>
       </Header>
       <S.Monitoring>
