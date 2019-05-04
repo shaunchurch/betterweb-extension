@@ -57,6 +57,11 @@ function makeItBetter(badnet: Badnet): void {
     (link): void => {
       const domain = extractHostname(link.href);
       const text = extractHostname(link.innerText);
+      let hostname = window.location.host;
+
+      if (!shouldModifyOnHost(hostname, domain, text)) {
+        return null;
+      }
 
       // if it's in the list insert the alert
       if ((badnet.get(domain) || badnet.get(text)) && link.isBadnet !== true) {
@@ -64,6 +69,23 @@ function makeItBetter(badnet: Badnet): void {
       }
     }
   );
+}
+
+function shouldModifyOnHost(hostname: string, domain: string, text: string) {
+  if (hostname === domain || hostname === text) {
+    return false;
+  }
+
+  if (hostname.startsWith("www.")) {
+    hostname = hostname.substring(4);
+  } else {
+    hostname = "www." + hostname;
+  }
+
+  if (hostname === domain || hostname === text) {
+    return false;
+  }
+  return true;
 }
 
 function shouldUpdate(timestamp: number): boolean {
