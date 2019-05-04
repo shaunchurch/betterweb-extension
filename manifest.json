@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Betterweb",
-  "version": "0.4.1",
+  "version": "0.4.5",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
